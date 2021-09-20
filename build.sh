@@ -4,11 +4,11 @@ set -Eeuo pipefail
 thisDir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 source "$thisDir/bin/.constants.sh" \
 	--flags 'no-build,debug,lessram,manual,skip-tests' \
-	--flags 'arch:,qemu,features:,suite:,ports' \
+	--flags 'arch:,qemu,features:,ports' \
 	-- \
 	'[--no-build] [--lessram] [--debug] [--manual] [--arch=<arch>] [--qemu] [--skip-tests] <output-dir> <version/timestamp>' \
-	'output stretch 2017-05-08T00:00:00Z
---arch i386 output bullseye 2016-03-14T00:00:00Z' 
+	'output 520.0 2017-05-08T00:00:00Z
+--arch i386 output bookworm 2016-03-14T00:00:00Z'
 
 eval "$dgetopt"
 build=1
@@ -18,7 +18,6 @@ lessram=
 arch=
 qemu=
 features=
-suite="testing"
 suiteports=
 notests=0
 while true; do
@@ -32,7 +31,6 @@ while true; do
 		--arch)		arch="$1"; shift ;; # building the image for arch (if empty build arch running on)
 		--qemu) 	qemu=1 ;;	# for using "qemu-debootstrap" and "start-vm"
 		--features) 	features="$1"; shift ;; # adding featurelist
-		--suite) 	suite="$1"; shift ;; # adding suite
 		--ports)        suiteports=1 ; shift ;;      # enables "debian-ports" support for suite
 		--skip-tests)   notests=1 ;;    # skip running tests 
 		--) break ;;
@@ -51,7 +49,7 @@ userGID=$(id -g)
 envArgs=(
 	TZ="UTC"
 	LC_ALL="C"
-	suite="$suite"
+	suite="bookworm"
 	suiteports="$suiteports"
 	debug="$debug"
 	manual="$manual"
