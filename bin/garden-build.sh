@@ -48,11 +48,8 @@ dpkgArch="${arch:-$(dpkg --print-architecture | awk -F- "{ print \$NF }")}"
 debuerreotypeScriptsDir="$(dirname "$(readlink -f "$(which garden-init)")")"
 featureDir="$debuerreotypeScriptsDir/../features"
 
-snapshotUrl="$("$debuerreotypeScriptsDir/.snapshot-url.sh" "@$epoch")/dists/$suite/Release"
-codename=$(wget -qO - $snapshotUrl | awk -F: '$1 == "Codename" { print $2 }' | tr -d ' ')
-
 if [ -z "${prefix+x}" ]; then
-  prefix="/$serial/$dpkgArch/$codename"
+  prefix="/$serial/$dpkgArch"
 fi
 
 exportDir="output"
