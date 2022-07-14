@@ -9,3 +9,6 @@ EmitLLDP=true
 [DHCPv4]
 UseDomains=true
 UseMTU=true
+
+[DHCPv6]
+DUIDType=link-layer
